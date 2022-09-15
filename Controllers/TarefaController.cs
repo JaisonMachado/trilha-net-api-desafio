@@ -15,7 +15,7 @@ namespace TrilhaApiDesafio.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("ObterPor{id}")]
         public IActionResult ObterPorId(int id)
         {
             // TODO: Buscar o Id no banco utilizando o EF
@@ -34,12 +34,11 @@ namespace TrilhaApiDesafio.Controllers
         {
             // TODO: Buscar todas as tarefas no banco utilizando o EF
             var tarefas = _context.Tarefas.ToList();
-            if(tarefas==null)
-                return NotFound();
+           
             return Ok(tarefas);
         }
 
-        [HttpGet("ObterPorTitulo")]
+        [HttpGet("ObterPor{titulo}")]
         public IActionResult ObterPorTitulo(string titulo)
         {
             // TODO: Buscar  as tarefas no banco utilizando o EF, que contenha o titulo recebido por parâmetro
@@ -50,14 +49,14 @@ namespace TrilhaApiDesafio.Controllers
             return Ok(tarefa);
         }
 
-        [HttpGet("ObterPorData")]
+        [HttpGet("ObterPor{data}")]
         public IActionResult ObterPorData(DateTime data)
         {
             var tarefa = _context.Tarefas.Where(x => x.Data.Date == data.Date);
             return Ok(tarefa);
         }
 
-        [HttpGet("ObterPorStatus")]
+        [HttpGet("ObterPor{status}")]
         public IActionResult ObterPorStatus(EnumStatusTarefa status)
         {
             // TODO: Buscar  as tarefas no banco utilizando o EF, que contenha o status recebido por parâmetro
@@ -66,7 +65,7 @@ namespace TrilhaApiDesafio.Controllers
             return Ok(tarefa);
         }
 
-        [HttpPost]
+        [HttpPost("CriarUmaTarefa")]
         public IActionResult Criar(Tarefa tarefa)
         {
             if (tarefa.Data == DateTime.MinValue)
@@ -78,7 +77,7 @@ namespace TrilhaApiDesafio.Controllers
             return CreatedAtAction(nameof(ObterPorId), new { id = tarefa.Id }, tarefa);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("AtualizarTarefa{id}")]
         public IActionResult Atualizar(int id, Tarefa tarefa)
         {
             var tarefaBanco = _context.Tarefas.Find(id);
